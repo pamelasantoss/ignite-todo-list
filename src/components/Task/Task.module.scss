@@ -1,0 +1,117 @@
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: var(--gray-500);
+  border: 1px solid var(--gray-400);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: .75rem;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.content {
+  display: flex;
+  align-items: flex-start;
+
+  .label {
+    display: grid;
+    grid-template-columns: 1rem auto;
+    gap: .75rem;
+    cursor: pointer;
+
+    input[type="checkbox"] {
+      appearance: none;
+      background-color: transparent;
+      margin: .1rem 0 0 0;
+      color: var(--blue-500);
+      width: 1.063rem; // 17px
+      height: 1.063rem; // 17px
+      border: 0.15rem solid var(--blue-500);
+      border-radius: 50%;
+      transform: translateY(-.075rem);
+      display: grid;
+      place-content: center;
+      cursor: pointer;
+
+      &:hover {
+        border: 0.15rem solid var(--blue-700);
+      }
+
+      &::before {
+        content: "";
+        width: 1.063rem;
+        height: 1.063rem;
+        transform: scale(0);
+        transition: 120ms transform ease-in-out;
+        box-shadow: inset 1rem 1rem var(--purple-700);
+        border-radius: 50%;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 4px;
+        top: .5px;
+        width: 4px;
+        height: 8px;
+        border: solid var(--gray-100);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+
+      &:checked {
+        &:hover {
+          &::before {
+            box-shadow: inset 1rem 1rem var(--purple-300);
+          }
+        }
+        &::before {
+          transform: scale(1);
+        }
+
+        &::after {
+          display: block;
+        }
+      }
+    }
+  }
+
+  p {
+    color: var(--gray-100);
+    font-size: .875rem;
+
+    &.done {
+      text-decoration: line-through;
+      color: var(--gray-300);
+    }
+  }
+}
+
+.deleteButton {
+  border: none;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+
+  svg {
+    fill: var(--gray-300);
+  }
+
+  &:hover {
+    background-color: var(--gray-400);
+    svg {
+      fill: var(--red-500);
+    }
+  }
+}

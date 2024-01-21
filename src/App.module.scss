@@ -1,0 +1,10 @@
+.containter {
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .containter {
+    max-width: 50rem; // 800px
+  }
+}
