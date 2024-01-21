@@ -26,7 +26,7 @@ This application was a part of a Rocketseat course for practice the React concep
 
 ### :memo: License
 
-This project is under the MIT license. See the [LICENSE](https://github.com/pamelasantoss/ignite-todo-list/blob/main/LICENSE.txt) for more information.
+This project is under the MIT license. See the [LICENSE](https://github.com/pamelasantoss/ignite-todo-list/blob/main/LICENSE) for more information.
 
 ---
 
