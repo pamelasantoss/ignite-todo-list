@@ -1,25 +1,31 @@
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import { Trash } from '@phosphor-icons/react'
 import styles from './Task.module.scss'
+import { DraggableProvided } from '@hello-pangea/dnd';
 
 type TaskProps = {
+  id: string;
   content: string;
-  onDeleteTask: (content: string) => void;
-  onMarkTask: (content: string) => void;
-}
+  onDeleteTask: (id: string) => void;
+  onMarkTask: (id: string) => void;
+} & Partial<DraggableProvided["draggableProps"]> & Partial<DraggableProvided["dragHandleProps"]> // Partial torna as props de dragHandle e draggable opcionais
 
-export function Task({ content, onDeleteTask, onMarkTask }: TaskProps) {
+export const Task = forwardRef<HTMLLIElement, TaskProps>(({ id, content, onDeleteTask, onMarkTask, ...props }, ref) => {
   const [taskDone, setTaskDone] = useState(false)
 
-  const handleDeleteTask = () => onDeleteTask(content)
+  const handleDeleteTask = () => onDeleteTask(id)
 
   const handleMarkTaskAsDone = () => {
-    onMarkTask(content)
+    onMarkTask(id)
     setTaskDone(!taskDone)
   }
 
   return (
-    <div className={styles.task}>
+    <li
+      ref={ref}
+      className={styles.task}
+      {...props}
+    >
       <div className={styles.content}>
         <label className={styles.label}>
           <input type="checkbox" onClick={handleMarkTaskAsDone} />
@@ -34,6 +40,6 @@ export function Task({ content, onDeleteTask, onMarkTask }: TaskProps) {
       >
         <Trash size={16} />
       </button>
-    </div>
+    </li>
   )
-}
+})
