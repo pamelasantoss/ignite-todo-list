@@ -4,6 +4,7 @@ import { useTask } from "../../hooks/useTasks";
 import { Task } from "../Task/Task";
 import emptyClipboard from "../../assets/empty-clipboard.svg";
 import styles from "./Dashboard.module.scss";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 
 export function Dashboard() {
   const [newTask, setNewTask] = useState("");
@@ -14,6 +15,7 @@ export function Dashboard() {
     onCreateNewTask,
     onDeleteTask,
     onMarkTask,
+    onDragTask
   } = useTask(newTask);
 
   const allTasksCreated = tasks.length;
@@ -67,16 +69,34 @@ export function Dashboard() {
         </div>
 
         {tasks.length > 0 ? (
-          <div className={styles.withContent}>
-            {tasks.map((task) => (
-              <Task
-                key={task}
-                content={task}
-                onDeleteTask={onDeleteTask}
-                onMarkTask={onMarkTask}
-              />
-            ))}
-          </div>
+          <DragDropContext onDragEnd={onDragTask}>
+            <Droppable droppableId="droppable">
+              {(provided) => (
+                <ul
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className={styles.withContent}
+                >
+                  {tasks.map((task, index) => (
+                    <Draggable key={task.id} draggableId={task.id} index={index}>
+                      {(provided) => (
+                        <Task
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          id={task.id}
+                          content={task.content}
+                          onDeleteTask={onDeleteTask}
+                          onMarkTask={onMarkTask}
+                        />
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </ul>
+              )}
+            </Droppable>
+          </DragDropContext>
         ) : (
           <div className={styles.empty}>
             <img src={emptyClipboard} alt="Dashboard vazio" />
