@@ -43,7 +43,7 @@ export const useTask = (value: string) => {
 
   const onMarkTask = (taskToMark: string) => {
     const allTasksMarkAsDone = tasksDone;
-    const hasTask = allTasksMarkAsDone.find((task) => task.content === taskToMark);
+    const hasTask = allTasksMarkAsDone.find((task) => task.id === taskToMark);
 
     if (hasTask) {
       const removeTaskFromTheList = tasksDone.filter(
