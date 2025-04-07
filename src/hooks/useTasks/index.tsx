@@ -15,10 +15,16 @@ interface DragTaskResult {
   } | null
 }
 
+export interface TaskStatus {
+  title: string
+  description: string
+}
+
 export const useTask = (value: string) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [tasksDone, setTasksDone] = useState<Task[]>([]);
   const [clearField, setClearField] = useState(false);
+  const [taskStatus, setTaskStatus] = useState<TaskStatus>({ title: '', description: '' })
 
   const onCreateNewTask = (event: FormEvent) => {
     event.preventDefault();
@@ -29,6 +35,7 @@ export const useTask = (value: string) => {
     } else {
       setTasks([...tasks, { id: uuidv4(), content: value }]);
       setClearField(true);
+      setTaskStatus({ title: 'Nova tarefa', description: 'Tarefa criada com sucesso!' })
     }
 
     setTimeout(() => {
@@ -39,6 +46,7 @@ export const useTask = (value: string) => {
   const onDeleteTask = (taskToDelete: string) => {
     const allTasks = tasks.filter((task) => task.id !== taskToDelete);
     setTasks(allTasks);
+    setTaskStatus({ title: 'Tarefa excluída', description: 'Tarefa excluída com sucesso!' })
   };
 
   const onMarkTask = (taskToMark: string) => {
@@ -50,8 +58,10 @@ export const useTask = (value: string) => {
         (task) => task.id !== taskToMark
       );
       setTasksDone(removeTaskFromTheList);
+      setTaskStatus({ title: 'Tarefa desmarcada', description: 'Sua tarefa concluída foi desmarcada!' })
     } else {
       setTasksDone([...tasksDone, { id: taskToMark, content: '' }]);
+      setTaskStatus({ title: 'Tarefa concluída', description: 'Tarefa concluída com sucesso!' })
     }
   };
 
@@ -80,6 +90,7 @@ export const useTask = (value: string) => {
     tasks,
     tasksDone,
     clearField,
+    taskStatus,
     onCreateNewTask,
     onDeleteTask,
     onMarkTask,

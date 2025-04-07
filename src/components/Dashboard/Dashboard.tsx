@@ -6,6 +6,7 @@ import emptyClipboard from "../../assets/empty-clipboard.svg";
 import styles from "./Dashboard.module.scss";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { Toast } from "../Toast/Toast";
+import { useToast } from "../../hooks/useToast";
 
 export function Dashboard() {
   const [newTask, setNewTask] = useState("");
@@ -13,11 +14,13 @@ export function Dashboard() {
     tasks,
     tasksDone,
     clearField,
+    taskStatus,
     onCreateNewTask,
     onDeleteTask,
     onMarkTask,
     onDragTask,
   } = useTask(newTask);
+  const { openToast, setOpenToast, handleToast } = useToast()
 
   const allTasksCreated = tasks.length;
   const allTasksFinished = tasksDone.length;
@@ -35,6 +38,12 @@ export function Dashboard() {
       setNewTask("");
     }
   }, [clearField]);
+
+  useEffect(() => {
+    if (taskStatus.title && taskStatus.description) {
+      handleToast()
+    }
+  }, [taskStatus])
 
   return (
     <>
@@ -55,7 +64,6 @@ export function Dashboard() {
         </div>
       </form>
       <div className={styles.container}>
-        <Toast />
         <div className={styles.counters}>
           <div className={styles.allTasks}>
             <p>
@@ -112,6 +120,11 @@ export function Dashboard() {
             <p>Crie tarefas e organize seus itens a fazer</p>
           </div>
         )}
+        <Toast
+          open={openToast}
+          setOpen={setOpenToast}
+          status={taskStatus}
+        />
       </div>
     </>
   );
