@@ -5,6 +5,7 @@ import { Task } from "../Task/Task";
 import emptyClipboard from "../../assets/empty-clipboard.svg";
 import styles from "./Dashboard.module.scss";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import { Toast } from "../Toast/Toast";
 
 export function Dashboard() {
   const [newTask, setNewTask] = useState("");
@@ -15,7 +16,7 @@ export function Dashboard() {
     onCreateNewTask,
     onDeleteTask,
     onMarkTask,
-    onDragTask
+    onDragTask,
   } = useTask(newTask);
 
   const allTasksCreated = tasks.length;
@@ -54,6 +55,7 @@ export function Dashboard() {
         </div>
       </form>
       <div className={styles.container}>
+        <Toast />
         <div className={styles.counters}>
           <div className={styles.allTasks}>
             <p>
@@ -78,7 +80,11 @@ export function Dashboard() {
                   className={styles.withContent}
                 >
                   {tasks.map((task, index) => (
-                    <Draggable key={task.id} draggableId={task.id} index={index}>
+                    <Draggable
+                      key={task.id}
+                      draggableId={task.id}
+                      index={index}
+                    >
                       {(provided) => (
                         <Task
                           ref={provided.innerRef}
