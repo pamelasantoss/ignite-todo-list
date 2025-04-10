@@ -1,9 +1,10 @@
 import { FormEvent, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 
-interface Task {
+export interface Task {
   id: string
   content: string
+  done: boolean
 }
 
 interface DragTaskResult {
@@ -15,10 +16,15 @@ interface DragTaskResult {
   } | null
 }
 
+export interface TaskStatus {
+  title: string
+  description: string
+}
+
 export const useTask = (value: string) => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [tasksDone, setTasksDone] = useState<Task[]>([]);
   const [clearField, setClearField] = useState(false);
+  const [taskStatus, setTaskStatus] = useState<TaskStatus>({ title: '', description: '' })
 
   const onCreateNewTask = (event: FormEvent) => {
     event.preventDefault();
@@ -27,8 +33,9 @@ export const useTask = (value: string) => {
     if (taskAlreadyCreated) {
       alert("Essa tarefa já foi criada!");
     } else {
-      setTasks([...tasks, { id: uuidv4(), content: value }]);
+      setTasks([...tasks, { id: uuidv4(), content: value, done: false }]);
       setClearField(true);
+      setTaskStatus({ title: 'Nova tarefa', description: 'Tarefa criada com sucesso!' })
     }
 
     setTimeout(() => {
@@ -39,19 +46,21 @@ export const useTask = (value: string) => {
   const onDeleteTask = (taskToDelete: string) => {
     const allTasks = tasks.filter((task) => task.id !== taskToDelete);
     setTasks(allTasks);
+    setTaskStatus({ title: 'Tarefa excluída', description: 'Tarefa excluída com sucesso!' })
   };
 
   const onMarkTask = (taskToMark: string) => {
-    const allTasksMarkAsDone = tasksDone;
-    const hasTask = allTasksMarkAsDone.find((task) => task.id === taskToMark);
+    const newTasksUpdate = tasks.map(task => 
+      task.id === taskToMark ? { ...task, done: !task.done } : task
+    );
+    setTasks(newTasksUpdate);
+
+    const hasTask = tasks.find((task) => task.id === taskToMark && task.done === true);
 
     if (hasTask) {
-      const removeTaskFromTheList = tasksDone.filter(
-        (task) => task.id !== taskToMark
-      );
-      setTasksDone(removeTaskFromTheList);
+      setTaskStatus({ title: 'Tarefa desmarcada', description: 'Sua tarefa concluída foi desmarcada!' })
     } else {
-      setTasksDone([...tasksDone, { id: taskToMark, content: '' }]);
+      setTaskStatus({ title: 'Tarefa concluída', description: 'Tarefa concluída com sucesso!' })
     }
   };
 
@@ -78,8 +87,8 @@ export const useTask = (value: string) => {
 
   return {
     tasks,
-    tasksDone,
     clearField,
+    taskStatus,
     onCreateNewTask,
     onDeleteTask,
     onMarkTask,

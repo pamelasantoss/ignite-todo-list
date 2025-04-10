@@ -5,21 +5,24 @@ import { Task } from "../Task/Task";
 import emptyClipboard from "../../assets/empty-clipboard.svg";
 import styles from "./Dashboard.module.scss";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import { Toast } from "../Toast/Toast";
+import { useToast } from "../../hooks/useToast";
 
 export function Dashboard() {
   const [newTask, setNewTask] = useState("");
   const {
     tasks,
-    tasksDone,
     clearField,
+    taskStatus,
     onCreateNewTask,
     onDeleteTask,
     onMarkTask,
-    onDragTask
+    onDragTask,
   } = useTask(newTask);
+  const { openToast, setOpenToast, handleToast } = useToast()
 
   const allTasksCreated = tasks.length;
-  const allTasksFinished = tasksDone.length;
+  const allTasksFinished = tasks.filter(task => task.done).length;
   const tasksProgress =
     allTasksCreated > 0
       ? `${allTasksFinished} de ${allTasksCreated}`
@@ -34,6 +37,12 @@ export function Dashboard() {
       setNewTask("");
     }
   }, [clearField]);
+
+  useEffect(() => {
+    if (taskStatus.title && taskStatus.description) {
+      handleToast()
+    }
+  }, [taskStatus])
 
   return (
     <>
@@ -78,14 +87,17 @@ export function Dashboard() {
                   className={styles.withContent}
                 >
                   {tasks.map((task, index) => (
-                    <Draggable key={task.id} draggableId={task.id} index={index}>
+                    <Draggable
+                      key={task.id}
+                      draggableId={task.id}
+                      index={index}
+                    >
                       {(provided) => (
                         <Task
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          id={task.id}
-                          content={task.content}
+                          taskContent={task}
                           onDeleteTask={onDeleteTask}
                           onMarkTask={onMarkTask}
                         />
@@ -106,6 +118,11 @@ export function Dashboard() {
             <p>Crie tarefas e organize seus itens a fazer</p>
           </div>
         )}
+        <Toast
+          open={openToast}
+          setOpen={setOpenToast}
+          status={taskStatus}
+        />
       </div>
     </>
   );
