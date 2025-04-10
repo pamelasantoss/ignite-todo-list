@@ -12,7 +12,6 @@ export function Dashboard() {
   const [newTask, setNewTask] = useState("");
   const {
     tasks,
-    tasksDone,
     clearField,
     taskStatus,
     onCreateNewTask,
@@ -23,7 +22,7 @@ export function Dashboard() {
   const { openToast, setOpenToast, handleToast } = useToast()
 
   const allTasksCreated = tasks.length;
-  const allTasksFinished = tasksDone.length;
+  const allTasksFinished = tasks.filter(task => task.done).length;
   const tasksProgress =
     allTasksCreated > 0
       ? `${allTasksFinished} de ${allTasksCreated}`
@@ -98,8 +97,7 @@ export function Dashboard() {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          id={task.id}
-                          content={task.content}
+                          taskContent={task}
                           onDeleteTask={onDeleteTask}
                           onMarkTask={onMarkTask}
                         />

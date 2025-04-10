@@ -1,24 +1,21 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef } from 'react';
 import { Trash } from '@phosphor-icons/react'
 import styles from './Task.module.scss'
 import { DraggableProvided } from '@hello-pangea/dnd';
+import { Task as TaskType } from '../../hooks/useTasks';
 
 type TaskProps = {
-  id: string;
-  content: string;
+  taskContent: TaskType;
   onDeleteTask: (id: string) => void;
   onMarkTask: (id: string) => void;
 } & Partial<DraggableProvided["draggableProps"]> & Partial<DraggableProvided["dragHandleProps"]> // Partial torna as props de dragHandle e draggable opcionais
 
-export const Task = forwardRef<HTMLLIElement, TaskProps>(({ id, content, onDeleteTask, onMarkTask, ...props }, ref) => {
-  const [taskDone, setTaskDone] = useState(false)
-
+export const Task = forwardRef<HTMLLIElement, TaskProps>(({ taskContent, onDeleteTask, onMarkTask, ...props }, ref) => {
+  const { id, content, done } = taskContent
+  
   const handleDeleteTask = () => onDeleteTask(id)
 
-  const handleMarkTaskAsDone = () => {
-    onMarkTask(id)
-    setTaskDone(!taskDone)
-  }
+  const handleMarkTaskAsDone = () => onMarkTask(id)
 
   return (
     <li
@@ -29,7 +26,7 @@ export const Task = forwardRef<HTMLLIElement, TaskProps>(({ id, content, onDelet
       <div className={styles.content}>
         <label className={styles.label}>
           <input type="checkbox" onClick={handleMarkTaskAsDone} />
-          <p className={taskDone ? styles.done : ""}>{content}</p>
+          <p className={done ? styles.done : ""}>{content}</p>
         </label>        
       </div>
 
