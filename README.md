@@ -4,12 +4,28 @@
 ![GitHub](https://img.shields.io/github/license/pamelasantoss/ignite-todo-list?color=%23387fc6&style=for-the-badge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/pamelasantoss/ignite-todo-list?color=%23387fc6&style=for-the-badge)
 
-### :bulb: Description
+![ToDo List Screenshot](todo-list.png)
 
-Simple to do list application built in TypeScript.
-This application was a part of a Rocketseat course for practice the React concepts.
+## Description
 
-### :rocket: Technologies
+**ToDo List** is a simple and modern task management application, built with TypeScript and ReactJS as part of a Rocketseat course. The project's goal is to practice fundamental React concepts such as components, states, and list manipulation.
+
+The app allows users to:
+- Add new tasks to your list
+- Mark tasks as completed or pending
+- Remove tasks
+- View your daily activities progress
+
+## Features
+
+- 💡 Clean and intuitive interface
+- 📝 Easily add, complete and remove tasks
+- 📊 View total created and completed tasks
+- 🔄 Real-time task list updates
+- 🖱️ Drag & drop to reorder your tasks
+- 🎨 Modern styling with SASS and Google Fonts
+
+## Technologies
 
 - [Vite](https://vitejs.dev/)
 - [ReactJS](https://react.dev/learn)
@@ -17,17 +33,53 @@ This application was a part of a Rocketseat course for practice the React concep
 - [SASS](https://sass-lang.com/)
 - [Google Fonts](https://fonts.google.com/)
 
-### :heavy_check_mark: Installation
+## Getting Started
 
-- You need to have `node` on your setup from version 19
-- Clone this repository and then run `npm run install` to install the project dependencies
-- `npm run dev` to see the project running on `:5173` localhost port
-- `npm run build` and then `npm run preview` to run the production version
+### Prerequisites
 
-### :memo: License
+- Node.js v19 or higher
 
-This project is under the MIT license. See the [LICENSE](https://github.com/pamelasantoss/ignite-todo-list/blob/main/LICENSE) for more information.
+### Installation
+
+```bash
+git clone https://github.com/pamelasantoss/ignite-todo-list.git
+cd ignite-todo-list
+npm install
+npm run dev
+```
+
+Visit [http://localhost:5173](http://localhost:5173) to view the app.
+
+### Production Build
+
+```bash
+npm run build
+npm run preview
+```
+
+## Project Structure
+
+- `src/assets`: Contains project images and icons
+- `src/components`: Reusable interface components (e.g., Task, Toast, Header)
+- `src/styles`: Global styling and SASS variables
+
+## Learning Goals
+
+This project was developed to practice and demonstrate:
+- List manipulation and state management in React
+- Component-based architecture and code organization best practices
+- Static typing and safety with TypeScript
+- Modern styling with SASS
+- Simple and efficient user experience
+
+## Contributing
+
+Contributions are welcome! Feel free to open issues or submit pull requests.
+
+## License
+
+This project is under the MIT license. See the [LICENSE](https://github.com/pamelasantoss/ignite-todo-list/blob/main/LICENSE) file for details.
 
 ---
 
-Made with ❤️ by Pamela Santos :point_right: [Get in touch!](https://pamelasantos.dev.br/)
+Made with ❤️ by [Pamela Santos](https://pamelasantos.dev.br/)
