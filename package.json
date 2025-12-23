@@ -11,23 +11,23 @@
   },
   "dependencies": {
     "@hello-pangea/dnd": "^18.0.1",
-    "@phosphor-icons/react": "^2.1.7",
-    "@radix-ui/react-toast": "^1.2.7",
+    "@phosphor-icons/react": "^2.1.10",
+    "@radix-ui/react-toast": "^1.2.15",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
-    "@types/react": "^18.3.20",
-    "@types/react-dom": "^18.3.6",
+    "@types/react": "^18.3.27",
+    "@types/react-dom": "^18.3.7",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
-    "@vitejs/plugin-react": "^4.3.4",
+    "@vitejs/plugin-react": "^4.7.0",
     "eslint": "^8.57.1",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "sass": "^1.86.3",
-    "typescript": "^5.8.3",
-    "vite": "^6.2.6"
+    "eslint-plugin-react-refresh": "^0.4.26",
+    "sass": "^1.97.1",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.1"
   }
 }
