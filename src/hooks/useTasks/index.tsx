@@ -1,30 +1,33 @@
 import { FormEvent, useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 export interface Task {
-  id: string
-  content: string
-  done: boolean
+  id: string;
+  content: string;
+  done: boolean;
 }
 
 interface DragTaskResult {
   source: {
-    index: number
-  }
+    index: number;
+  };
   destination: {
-    index: number
-  } | null
+    index: number;
+  } | null;
 }
 
 export interface TaskStatus {
-  title: string
-  description: string
+  title: string;
+  description: string;
 }
 
 export const useTask = (value: string) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [clearField, setClearField] = useState(false);
-  const [taskStatus, setTaskStatus] = useState<TaskStatus>({ title: '', description: '' })
+  const [taskStatus, setTaskStatus] = useState<TaskStatus>({
+    title: "",
+    description: "",
+  });
 
   const onCreateNewTask = (event: FormEvent) => {
     event.preventDefault();
@@ -35,7 +38,10 @@ export const useTask = (value: string) => {
     } else {
       setTasks([...tasks, { id: uuidv4(), content: value, done: false }]);
       setClearField(true);
-      setTaskStatus({ title: 'Nova tarefa', description: 'Tarefa criada com sucesso!' })
+      setTaskStatus({
+        title: "Nova tarefa",
+        description: "Tarefa criada com sucesso!",
+      });
     }
 
     setTimeout(() => {
@@ -46,44 +52,59 @@ export const useTask = (value: string) => {
   const onDeleteTask = (taskToDelete: string) => {
     const allTasks = tasks.filter((task) => task.id !== taskToDelete);
     setTasks(allTasks);
-    setTaskStatus({ title: 'Tarefa excluída', description: 'Tarefa excluída com sucesso!' })
+    setTaskStatus({
+      title: "Tarefa excluída",
+      description: "Tarefa excluída com sucesso!",
+    });
+  };
+
+  const onEditTask = (taskToEdit: string) => {
+    console.log(taskToEdit);
   };
 
   const onMarkTask = (taskToMark: string) => {
-    const newTasksUpdate = tasks.map(task => 
-      task.id === taskToMark ? { ...task, done: !task.done } : task
+    const newTasksUpdate = tasks.map((task) =>
+      task.id === taskToMark ? { ...task, done: !task.done } : task,
     );
     setTasks(newTasksUpdate);
 
-    const hasTask = tasks.find((task) => task.id === taskToMark && task.done === true);
+    const hasTask = tasks.find(
+      (task) => task.id === taskToMark && task.done === true,
+    );
 
     if (hasTask) {
-      setTaskStatus({ title: 'Tarefa desmarcada', description: 'Sua tarefa concluída foi desmarcada!' })
+      setTaskStatus({
+        title: "Tarefa desmarcada",
+        description: "Sua tarefa concluída foi desmarcada!",
+      });
     } else {
-      setTaskStatus({ title: 'Tarefa concluída', description: 'Tarefa concluída com sucesso!' })
+      setTaskStatus({
+        title: "Tarefa concluída",
+        description: "Tarefa concluída com sucesso!",
+      });
     }
   };
 
   const onDragTask = (result: DragTaskResult) => {
     const { destination, source } = result;
-  
+
     // Se o item não for solto em uma área válida, não faz nada
     if (!destination) {
       return;
     }
-  
+
     // Se o item não mudar de posição, não faz nada
     if (destination.index === source.index) {
       return;
     }
-  
+
     const updatedTasks = Array.from(tasks);
     const [movedItem] = updatedTasks.splice(source.index, 1); // Remove o item da posição original
     updatedTasks.splice(destination.index, 0, movedItem); // Adiciona o item na nova posição
-  
+
     // Atualiza o estado com a nova ordem
-    setTasks(updatedTasks)
-  }
+    setTasks(updatedTasks);
+  };
 
   return {
     tasks,
@@ -91,7 +112,8 @@ export const useTask = (value: string) => {
     taskStatus,
     onCreateNewTask,
     onDeleteTask,
+    onEditTask,
     onMarkTask,
-    onDragTask
+    onDragTask,
   };
 };
