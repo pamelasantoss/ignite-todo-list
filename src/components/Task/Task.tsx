@@ -16,7 +16,7 @@ type TaskProps = {
   onSetEditing: (id: string | null) => void;
   onMarkTask: (id: string) => void;
 } & Partial<DraggableProvided["draggableProps"]> &
-  Partial<DraggableProvided["dragHandleProps"]>;
+  Partial<DraggableProvided["dragHandleProps"]>; // Partial torna as props de dragHandle e draggable opcionais
 
 export const Task = forwardRef<HTMLLIElement, TaskProps>(
   (
@@ -36,9 +36,7 @@ export const Task = forwardRef<HTMLLIElement, TaskProps>(
 
     const handleDeleteTask = () => onDeleteTask(id);
 
-    const handleEditTask = () => {
-      onEditTask(id, editTask);
-    };
+    const handleEditTask = () => onEditTask(id, editTask);
 
     const handleMarkTaskAsDone = () => onMarkTask(id);
 
@@ -80,6 +78,7 @@ export const Task = forwardRef<HTMLLIElement, TaskProps>(
                   onSetEditing(id);
                   setEditTask(content);
                 }}
+                title="Editar tarefa"
               >
                 <PencilSimpleLineIcon size={16} />
               </button>
@@ -87,6 +86,7 @@ export const Task = forwardRef<HTMLLIElement, TaskProps>(
                 type="button"
                 className={styles.deleteButton}
                 onClick={handleDeleteTask}
+                title="Excluir tarefa"
               >
                 <TrashIcon size={16} />
               </button>
