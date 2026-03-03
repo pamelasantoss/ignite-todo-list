@@ -28,6 +28,7 @@ export const useTask = (value: string) => {
     title: "",
     description: "",
   });
+  const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
 
   const onCreateNewTask = (event: FormEvent) => {
     event.preventDefault();
@@ -58,8 +59,32 @@ export const useTask = (value: string) => {
     });
   };
 
-  const onEditTask = (taskToEdit: string) => {
-    console.log(taskToEdit);
+  const onEditTask = (taskToEdit: string, newText: string) => {
+    if (newText.trim() === "") {
+      setTaskStatus({
+        title: "Erro ao editar tarefa",
+        description: "O campo não pode estar vazio.",
+      });
+
+      return;
+    }
+
+    const taskAlreadyCreated = tasks.find((task) => task.content === newText);
+    if (taskAlreadyCreated) {
+      alert("Essa tarefa já foi criada!");
+      return;
+    }
+
+    const editedTask = tasks.map((task) =>
+      task.id === taskToEdit ? { ...task, content: newText } : task,
+    );
+    setTasks(editedTask);
+    setEditingTaskId(null);
+
+    setTaskStatus({
+      title: "Tarefa editada",
+      description: "Sua tarefa foi editada com sucesso!",
+    });
   };
 
   const onMarkTask = (taskToMark: string) => {
@@ -110,10 +135,12 @@ export const useTask = (value: string) => {
     tasks,
     clearField,
     taskStatus,
+    editingTaskId,
     onCreateNewTask,
     onDeleteTask,
     onEditTask,
     onMarkTask,
     onDragTask,
+    setEditingTaskId,
   };
 };

@@ -14,11 +14,13 @@ export function Dashboard() {
     tasks,
     clearField,
     taskStatus,
+    editingTaskId,
     onCreateNewTask,
     onDeleteTask,
     onEditTask,
     onMarkTask,
     onDragTask,
+    setEditingTaskId,
   } = useTask(newTask);
   const { openToast, setOpenToast, handleToast } = useToast();
 
@@ -100,8 +102,10 @@ export function Dashboard() {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                           taskContent={task}
+                          isEditing={editingTaskId === task.id}
                           onDeleteTask={onDeleteTask}
                           onEditTask={onEditTask}
+                          onSetEditing={setEditingTaskId}
                           onMarkTask={onMarkTask}
                         />
                       )}
