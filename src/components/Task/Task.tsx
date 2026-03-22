@@ -3,6 +3,7 @@ import {
   CheckIcon,
   PencilSimpleLineIcon,
   TrashIcon,
+  XIcon,
 } from "@phosphor-icons/react";
 import styles from "./Task.module.scss";
 import { DraggableProvided } from "@hello-pangea/dnd";
@@ -61,14 +62,24 @@ export const Task = forwardRef<HTMLLIElement, TaskProps>(
 
         <div className={styles.buttonsContainer}>
           {isEditing ? (
-            <button
-              type="button"
-              className={styles.editButton}
-              onClick={handleEditTask}
-              title="Salvar tarefa"
-            >
-              <CheckIcon size={16} />
-            </button>
+            <>
+              <button
+                type="button"
+                className={styles.editButton}
+                onClick={handleEditTask}
+                title="Salvar tarefa"
+              >
+                <CheckIcon size={16} />
+              </button>
+              <button
+                type="button"
+                className={styles.cancelButton}
+                onClick={() => onSetEditing(null)}
+                title="Cancelar edição da tarefa"
+              >
+                <XIcon size={16} />
+              </button>
+            </>
           ) : (
             <>
               <button
