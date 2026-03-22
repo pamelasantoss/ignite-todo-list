@@ -39,6 +39,14 @@ export const Task = forwardRef<HTMLLIElement, TaskProps>(
 
     const handleEditTask = () => onEditTask(id, editTask);
 
+    const handleEditTaskEnterKey = (
+      event: React.KeyboardEvent<HTMLInputElement>,
+    ) => {
+      if (event.key === "Enter") {
+        onEditTask(id, editTask);
+      }
+    };
+
     const handleMarkTaskAsDone = () => onMarkTask(id);
 
     return (
@@ -56,6 +64,7 @@ export const Task = forwardRef<HTMLLIElement, TaskProps>(
                 name="editTask"
                 value={editTask}
                 onChange={(e) => setEditTask(e.target.value)}
+                onKeyDown={handleEditTaskEnterKey}
                 required
               />
             ) : (
