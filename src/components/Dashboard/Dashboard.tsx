@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { PlusCircle } from "@phosphor-icons/react";
+import { PlusCircleIcon } from "@phosphor-icons/react";
 import { useTask } from "../../hooks/useTasks";
 import { Task } from "../Task/Task";
 import emptyClipboard from "../../assets/empty-clipboard.svg";
@@ -14,15 +14,18 @@ export function Dashboard() {
     tasks,
     clearField,
     taskStatus,
+    editingTaskId,
     onCreateNewTask,
     onDeleteTask,
+    onEditTask,
     onMarkTask,
     onDragTask,
+    setEditingTaskId,
   } = useTask(newTask);
-  const { openToast, setOpenToast, handleToast } = useToast()
+  const { openToast, setOpenToast, handleToast } = useToast();
 
   const allTasksCreated = tasks.length;
-  const allTasksFinished = tasks.filter(task => task.done).length;
+  const allTasksFinished = tasks.filter((task) => task.done).length;
   const tasksProgress =
     allTasksCreated > 0
       ? `${allTasksFinished} de ${allTasksCreated}`
@@ -40,9 +43,10 @@ export function Dashboard() {
 
   useEffect(() => {
     if (taskStatus.title && taskStatus.description) {
-      handleToast()
+      handleToast();
     }
-  }, [taskStatus])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [taskStatus]);
 
   return (
     <>
@@ -58,7 +62,7 @@ export function Dashboard() {
           />
           <button type="submit">
             Criar
-            <PlusCircle size={20} weight="bold" />
+            <PlusCircleIcon size={20} weight="bold" />
           </button>
         </div>
       </form>
@@ -98,7 +102,10 @@ export function Dashboard() {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                           taskContent={task}
+                          isEditing={editingTaskId === task.id}
                           onDeleteTask={onDeleteTask}
+                          onEditTask={onEditTask}
+                          onSetEditing={setEditingTaskId}
                           onMarkTask={onMarkTask}
                         />
                       )}
@@ -118,11 +125,7 @@ export function Dashboard() {
             <p>Crie tarefas e organize seus itens a fazer</p>
           </div>
         )}
-        <Toast
-          open={openToast}
-          setOpen={setOpenToast}
-          status={taskStatus}
-        />
+        <Toast open={openToast} setOpen={setOpenToast} status={taskStatus} />
       </div>
     </>
   );

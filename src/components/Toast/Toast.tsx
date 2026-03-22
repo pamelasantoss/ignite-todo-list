@@ -1,12 +1,12 @@
 import * as ToastPrimitive from "@radix-ui/react-toast";
 import styles from "./Toast.module.scss";
-import { X } from "@phosphor-icons/react";
+import { XIcon } from "@phosphor-icons/react";
 import { TaskStatus } from "../../hooks/useTasks";
 
 interface ToastProps {
-  open: boolean
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  status: TaskStatus
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  status: TaskStatus;
 }
 
 export function Toast({ open, setOpen, status }: ToastProps) {
@@ -26,7 +26,7 @@ export function Toast({ open, setOpen, status }: ToastProps) {
         </ToastPrimitive.Description>
         <ToastPrimitive.Close asChild aria-label="Close the toast">
           <button className={`${styles.button} small fixed`}>
-            <X size={20} />
+            <XIcon size={20} />
           </button>
         </ToastPrimitive.Close>
       </ToastPrimitive.Root>
