@@ -45,7 +45,11 @@ export const Task = forwardRef<HTMLLIElement, TaskProps>(
       <li ref={ref} className={styles.task} {...props}>
         <div className={styles.content}>
           <label className={styles.label}>
-            <input type="checkbox" onClick={handleMarkTaskAsDone} />
+            <input
+              type="checkbox"
+              onClick={handleMarkTaskAsDone}
+              disabled={isEditing}
+            />
             {isEditing ? (
               <input
                 type="text"
