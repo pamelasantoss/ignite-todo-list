@@ -11,15 +11,18 @@
 **ToDo List** is a simple and modern task management application, built with TypeScript and ReactJS as part of a Rocketseat course. The project's goal is to practice fundamental React concepts such as components, states, and list manipulation.
 
 The app allows users to:
+
 - Add new tasks to your list
 - Mark tasks as completed or pending
 - Remove tasks
+- Edit tasks already created on the list
+- Drag and drop the task to change its order
 - View your daily activities progress
 
 ## Features
 
 - 💡 Clean and intuitive interface
-- 📝 Easily add, complete and remove tasks
+- 📝 Easily add, edit, complete and remove tasks
 - 📊 View total created and completed tasks
 - 🔄 Real-time task list updates
 - 🖱️ Drag & drop to reorder your tasks
@@ -66,6 +69,7 @@ npm run preview
 ## Learning Goals
 
 This project was developed to practice and demonstrate:
+
 - List manipulation and state management in React
 - Component-based architecture and code organization best practices
 - Static typing and safety with TypeScript
