@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export interface Task {
@@ -29,6 +29,7 @@ export const useTask = (value: string) => {
     description: "",
   });
   const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
+  const tasksSaved = localStorage.getItem("userTasks");
 
   const onCreateNewTask = (event: FormEvent) => {
     event.preventDefault();
@@ -43,6 +44,12 @@ export const useTask = (value: string) => {
         title: "Nova tarefa",
         description: "Tarefa criada com sucesso!",
       });
+
+      const tasksToSave = JSON.stringify([
+        ...tasks,
+        { id: uuidv4(), content: value, done: false },
+      ]);
+      localStorage.setItem("userTasks", tasksToSave);
     }
 
     setTimeout(() => {
@@ -57,6 +64,8 @@ export const useTask = (value: string) => {
       title: "Tarefa excluída",
       description: "Tarefa excluída com sucesso!",
     });
+
+    localStorage.setItem("userTasks", JSON.stringify(allTasks));
   };
 
   const onEditTask = (taskToEdit: string, newText: string) => {
@@ -85,6 +94,8 @@ export const useTask = (value: string) => {
       title: "Tarefa editada",
       description: "Sua tarefa foi editada com sucesso!",
     });
+
+    localStorage.setItem("userTasks", JSON.stringify(editedTask));
   };
 
   const onMarkTask = (taskToMark: string) => {
@@ -96,6 +107,7 @@ export const useTask = (value: string) => {
     const hasTask = tasks.find(
       (task) => task.id === taskToMark && task.done === true,
     );
+    localStorage.setItem("userTasks", JSON.stringify(newTasksUpdate));
 
     if (hasTask) {
       setTaskStatus({
@@ -129,7 +141,15 @@ export const useTask = (value: string) => {
 
     // Atualiza o estado com a nova ordem
     setTasks(updatedTasks);
+    localStorage.setItem("userTasks", JSON.stringify(updatedTasks));
   };
+
+  useEffect(() => {
+    if (tasksSaved) {
+      setTasks(JSON.parse(tasksSaved));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return {
     tasks,
