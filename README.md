@@ -26,6 +26,7 @@ The app allows users to:
 - 📊 View total created and completed tasks
 - 🔄 Real-time task list updates
 - 🖱️ Drag & drop to reorder your tasks
+- 💾 Keep the tasks saved on the local storage of the browser
 - 🎨 Modern styling with SASS and Google Fonts
 
 ## Technologies

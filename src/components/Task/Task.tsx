@@ -56,6 +56,7 @@ export const Task = forwardRef<HTMLLIElement, TaskProps>(
             <input
               type="checkbox"
               onClick={handleMarkTaskAsDone}
+              defaultChecked={done}
               disabled={isEditing}
             />
             {isEditing ? (
